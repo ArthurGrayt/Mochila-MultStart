@@ -13,3 +13,23 @@ def mochila(valores, pesos_itens, capacidade, ordem_itens):
             itens_mochila.append(i)  # add no fim da lista itens_mochila
     return valor_total, peso_total, itens_mochila  # retornando resultados
 
+
+valores = [60, 100, 120, 80, 20]  # Lista com os valores dos itens
+pesos_itens = [40, 30, 80, 40, 50]  # Lista com os pesos dos itens
+capacidade = 120  # Capacidade máxima da mochila
+
+# Criamos uma lista de eficiência para cada item,
+# onde: eficiência = (valor / peso)
+eficiencia_itens = [valor / peso for valor, peso in zip(valores, pesos_itens)]
+
+# Criamos uma lista com os índices dos itens
+# e ordenamos pela eficiência do maior para o menor
+indices_itens = sorted(range(len(valores)),
+                       key=lambda i: eficiencia_itens[i], reverse=True)
+
+# Teste com ordem baseada em eficiência
+valor, peso, itens = mochila(valores, pesos_itens, capacidade, indices_itens)
+print("Resultado com eficiência:")
+print("Valor total:", valor)
+print("Peso total:", peso)
+print("Itens na mochila:", itens)
