@@ -1,6 +1,8 @@
 # Mochila MultStart
+import random  # módulo 'random', que permite embaralhar listas aleatoriamente
 
 # Função da mochila 
+
 
 def mochila(valores, pesos_itens, capacidade, ordem_itens):
     valor_total = 0  # valor total acumulado da mochila com 0
@@ -33,3 +35,26 @@ print("Resultado com eficiência:")
 print("Valor total:", valor)
 print("Peso total:", peso)
 print("Itens na mochila:", itens)
+
+valor_melhor = 0  # variavel pra guardar o melhor valor até agora
+melhor_solucao = 0  # variavel pra guardar a melhor solução até agora
+tentativas = 1000  # vezes que vamos tentar solucionar
+
+# Loop para tentar 1000 vezes
+for _ in range(tentativas):
+    ordem_random = list(range(len(valores)))  # Embaralhamos os itens
+    random.shuffle(ordem_random)  # Embaralha a ordem dos itens
+    valor, peso, itens = mochila(valores, pesos_itens,
+                                 capacidade, ordem_random)
+    if valor > valor_melhor:
+        valor_melhor = valor  # se for melhor, atualiza o valor
+        melhor_solucao = (valor, peso, itens)  # atualiza a melhor solução
+
+# Mostrando a melhor solução encontrada apos as 1000 tentativas
+print("\nMelhor solução encontrada (Multistart):")
+print("Valor total:", melhor_solucao[0])
+print("Peso total:", melhor_solucao[1])
+print("Itens na mochila:")
+for item in melhor_solucao[2]:
+    print(f"Item {item}: Valor = {valores[item]}, Peso = {pesos_itens[item]}")
+print("Total de itens escolhidos:", len(melhor_solucao[2]))
